@@ -11,7 +11,20 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def match_regex(regex, case_sensitive=True, score_factor=None):
-    """Return regex match decorator."""
+    """Return regex match decorator.
+
+    Args:
+        regex (str): The regular expression to match.
+        case_sensitive (bool, optional): Whether or not ignore the matching
+            case. Defaults to True.
+        score_factor (float, optional): The factor (0 to 1) to use when the
+            regex is used over a Natural Language Understanding (NLU) skill.
+            Defaults to None, but only to use the default value of 0.6 defined
+            in REGEX_SCORE_FACTOR.
+
+    Returns:
+        A regex match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for regex matching."""
         opsdroid = get_opsdroid()
@@ -30,7 +43,15 @@ def match_regex(regex, case_sensitive=True, score_factor=None):
 
 
 def match_apiai_action(action):
-    """Return Dialogflow action match decorator."""
+    """Return Dialogflow action match decorator.
+
+    Args:
+        action (str): It is a single word (ID) created in Dialogflow once the
+            training phrases for each intent are built.
+
+    Returns:
+        A dialogflow action match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for Dialogflow matching."""
         opsdroid = get_opsdroid()
@@ -47,7 +68,15 @@ def match_apiai_action(action):
 
 
 def match_apiai_intent(intent):
-    """Return Dialogflow intent match decorator."""
+    """Return Dialogflow intent match decorator.
+
+    Args:
+        intent (str): It is a single word (ID) defined in the Dialogflow agent
+            that maps user input to responses.
+
+    Returns:
+        A dialogflow intent match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for Dialogflow matching."""
         opsdroid = get_opsdroid()
@@ -64,7 +93,15 @@ def match_apiai_intent(intent):
 
 
 def match_dialogflow_action(action):
-    """Return Dialogflowi action match decorator."""
+    """Return Dialogflow action match decorator.
+
+    Args:
+        action (str): It is a single word (ID) created in Dialogflow once the
+            training phrases for each intent are built.
+
+    Returns:
+        A dialogflow action match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for Dialogflow matching."""
         opsdroid = get_opsdroid()
@@ -78,7 +115,15 @@ def match_dialogflow_action(action):
 
 
 def match_dialogflow_intent(intent):
-    """Return Dialogflow intent match decorator."""
+    """Return Dialogflow intent match decorator.
+
+    Args:
+        intent (str): It is a single word (ID) defined in the Dialogflow agent
+            that maps user input to responses.
+
+    Returns:
+        A dialogflow intent match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for Dialogflow matching."""
         opsdroid = get_opsdroid()
@@ -92,7 +137,15 @@ def match_dialogflow_intent(intent):
 
 
 def match_luisai_intent(intent):
-    """Return luisai intent match decorator."""
+    """Return luisai intent match decorator.
+
+    Args:
+        intent (str): It is a single word (ID) defined in the LUIS service
+            that maps user input to responses.
+
+    Returns:
+        A luisai intent match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for luisai matching."""
         opsdroid = get_opsdroid()
@@ -106,7 +159,15 @@ def match_luisai_intent(intent):
 
 
 def match_rasanlu(intent):
-    """Return Rasa NLU intent match decorator."""
+    """Return Rasa NLU intent match decorator.
+
+    Args:
+        intent (str): It is a single word (ID) defined in Rasa NLU service
+            that maps user input to responses.
+
+    Returns:
+        A luisai intent match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for Rasa NLU matching."""
         opsdroid = get_opsdroid()
@@ -120,7 +181,15 @@ def match_rasanlu(intent):
 
 
 def match_recastai(intent):
-    """Return recastai intent match decorator."""
+    """Return recastai intent match decorator.
+
+    Args:
+        intent (str): It is a single word (ID) defined in Recast AI service
+            that maps user input to responses.
+
+    Returns:
+        A recastai intent match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for recastai matching."""
         opsdroid = get_opsdroid()
@@ -134,7 +203,15 @@ def match_recastai(intent):
 
 
 def match_witai(intent):
-    """Return witai intent match decorator."""
+    """Return witai intent match decorator.
+
+    Args:
+        intent (str): It is a single word (ID) defined in Wit AI service
+            that maps user input to responses.
+
+    Returns:
+        A witai intent match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for witai matching."""
         opsdroid = get_opsdroid()
@@ -148,7 +225,18 @@ def match_witai(intent):
 
 
 def match_crontab(crontab, timezone=None):
-    """Return crontab match decorator."""
+    """Return crontab match decorator.
+
+    Args:
+        crontab (str): Cron timing (min, hour, day of the month, month, day of
+            the week) that will trigger the matcher. Examples: '* * * * *'
+            triggers every minute. '0 2 * * 0' triggers every Sun at 2:00am.
+        timezone (str): Timezone to use.  Defaults to None, but when None is
+            defined uses UTC.
+
+    Returns:
+        A crontab match timer decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for crontab matching."""
         opsdroid = get_opsdroid()
@@ -163,7 +251,15 @@ def match_crontab(crontab, timezone=None):
 
 
 def match_webhook(webhook):
-    """Return webhook match decorator."""
+    """Return webhook match decorator.
+
+    Args:
+        webhook (str): The webhook name to enable.
+            (http(s)://domain:port/skill/<name>/webhook).
+
+    Returns:
+        A webhook match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for webhook matching."""
         opsdroid = get_opsdroid()
@@ -191,7 +287,16 @@ def match_webhook(webhook):
 
 
 def match_always(func=None):
-    """Return always match decorator."""
+    """Return always match decorator.
+
+    This matcher parses every message as it is always running.
+
+    Args:
+        func (func): Receives a function. Defaults to None.
+
+    Returns:
+        An always match decorator.
+    """
     def matcher(func):
         """Add decorated function to skills list for always matching."""
         opsdroid = get_opsdroid()
